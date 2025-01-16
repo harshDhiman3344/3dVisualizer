@@ -1,0 +1,163 @@
+:root{
+  --bgColor : #280035;
+  --bgColorLight : rgb(21, 0, 95);
+  --textColor : hsla(242, 86%, 88%, 1);
+  --textColorDark : hsla(242, 36%, 0%, 1);
+  --paperColor: rgb(16, 132, 209);
+  --paperColorDark: rgb(12, 131, 161);
+  --shadowColorFaint: hsla(0, 0%, 0%, 0.2);
+}
+
+::selected{
+  color: var(--textColorDark);
+}
+
+html, body{
+  background-color: #00ff77;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background: var(--bgColor);
+  background: linear-gradient(135deg, var(--bgColor), var(--bgColorLight));
+  color: var(--textColor);
+  font-family: 'Saira', sans-serif;
+  position: relative;
+}
+
+*{
+  box-sizing: border-box;
+  transition: all 0.12s cubic-bezier(0.42, 0.54, 0.22, 1.26);
+}
+
+#canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+audio {
+  position: fixed;
+  left: 10px;
+  bottom: -10px;
+  height: 30vh;
+  width: calc(100% - 20px);
+  transition: all 0.5s linear;
+  -moz-box-shadow: 2px 2px 4px 0px #006773;
+  -webkit-box-shadow: 2px 2px 4px 0px #006773;
+  box-shadow: 2px 2px 4px 0px #006773;
+  -moz-border-radius:7px 7px 7px 7px;
+  -webkit-border-radius:7px 7px 7px 7px;
+  border-radius:7px 7px 7px 7px;
+}
+
+audio.active{
+  bottom: 10px;
+}
+
+#thefile{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+}
+
+label.file{
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  
+  background: var(--paperColor);
+  color: var(--textColor);
+  font-size: 1.25em;
+  font-weight: 700;
+  box-shadow: 0 20px 60px var(--shadowColorFaint);
+
+  cursor: pointer;
+}
+
+label.file:hover{
+  background: var(--paperColorDark);
+  transform: translate3d(-50%, -55%, 0);
+}
+
+label.file:active{
+  background: var(--paperColorDark);
+  transform: translate3d(-50%, -45%, 0);
+}
+
+label.file.normal{
+  transform: translate3d(10%, 50%, 0);
+  padding: 0.2rem 2rem;
+  font-size: 1rem;
+  top: 0;
+  left: 0;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  audio {
+      height: 15vh;
+      width: calc(100% - 20px);
+      bottom: 0;
+  }
+
+  label.file {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1em;
+  }
+
+  label.file.normal {
+      transform: translate3d(15%, 50%, 0);
+      padding: 0.2rem 1.5rem;
+      font-size: 0.9rem;
+  }
+}
+
+/* For Samsung Galaxy phone (360px wide in portrait) */
+@media (max-width: 380px) {
+  audio {
+      height: 20vh; /* Increased height for audio player */
+      width: calc(100% - 20px);
+      bottom: 0;
+  }
+
+  label.file {
+      padding: 1.2rem 2.5rem; /* Increased padding for better touch targets */
+      font-size: 1.3em; /* Slightly larger font size */
+  }
+
+  label.file.normal {
+      transform: translate3d(20%, 50%, 0);
+      padding: 0.3rem 1.8rem;
+      font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  audio {
+      height: 50vh;
+      width: calc(100% - 20px);
+      bottom: 0;
+  }
+
+  label.file {
+      padding: 0.5rem 1.2rem;
+      font-size: 1em;
+  }
+
+  label.file.normal {
+      transform: translate3d(20%, 50%, 0);
+      padding: 0.2rem 1.2rem;
+      font-size: 0.8rem;
+  }
+}
