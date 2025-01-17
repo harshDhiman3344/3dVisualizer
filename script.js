@@ -32,6 +32,7 @@ var vizInit = function () {
     var dataArray = new Uint8Array(bufferLength);
     var scene = new THREE.Scene();
     var group = new THREE.Group();
+    var bgroup = new THREE.Group();
     var camera = new THREE.PerspectiveCamera(
       45,
       window.innerWidth / window.innerHeight,
@@ -44,13 +45,30 @@ var vizInit = function () {
 
     var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-
     var planeGeometry = new THREE.PlaneGeometry(800, 800, 50, 50);
     var planeMaterial = new THREE.MeshLambertMaterial({
       color: 0x00ff77, // Neon Sunset Color
       side: THREE.DoubleSide,
       wireframe: true,
     });
+
+    const loader = new THREE.GLTFLoader();
+
+    loader.load(
+      "./stars/scene.gltf", // Replace with the actual path
+      function (gltf) {
+        const starrySky = gltf.scene;
+        starrySky.scale.setScalar(5); // Make the sky really large
+        bgroup.add(starrySky); // Add the loaded starry sky to the scene
+      },
+      undefined,
+      function (error) {
+        console.error(
+          "An error occurred while loading the starry sky model:",
+          error
+        );
+      }
+    );
 
     var plane = new THREE.Mesh(planeGeometry, planeMaterial);
     plane.rotation.x = -0.5 * Math.PI;
@@ -83,6 +101,7 @@ var vizInit = function () {
     scene.add(spotLight);
 
     scene.add(group);
+    scene.add(bgroup);
 
     document.getElementById("out").appendChild(renderer.domElement);
 
@@ -91,6 +110,7 @@ var vizInit = function () {
     render();
 
     function render() {
+
       analyser.getByteFrequencyData(dataArray);
 
       var lowerHalfArray = dataArray.slice(0, dataArray.length / 2 - 1);
@@ -120,6 +140,7 @@ var vizInit = function () {
       );
 
       group.rotation.y += 0.005;
+      bgroup.rotation.y -= 0.004;
       renderer.render(scene, camera);
       requestAnimationFrame(render);
     }
